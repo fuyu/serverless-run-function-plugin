@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.run = undefined;
 
 var _path = require('path');
+const fs = require("fs");
 
 var _path2 = _interopRequireDefault(_path);
 
@@ -26,6 +27,11 @@ var run = exports.run = function run(serverless, options) {
   var functionName = options.functionName;
 
   var functionObj = serverless.service.getFunction(functionName);
+  // Temporarily use this plugin to set ENV vars in AWS Lambda environment:
+  // https://github.com/silvermine/serverless-plugin-write-env-vars
+  // But also make the variables defined in serverless.yml available during
+  // local runs
+  writeEnv(serverless);
 
   var filename = functionObj.handler.split('.')[0] + '.js';
   var servicePath = serverless.config.servicePath;
@@ -45,3 +51,16 @@ var run = exports.run = function run(serverless, options) {
   importedModule[method](event, contextFn(functionName, serverless), callbackFn(serverless));
 };
 
+
+function writeEnv(serverless) {
+  const filePath = _path.join(serverless.config.servicePath, '.env');
+  const vars = serverless.service.custom.writeEnvVars;
+
+  var str = "";
+  for (var key in vars) {
+    str += key + "=" + vars[key] + "\n";
+  }
+
+  fs.writeFileSync(filePath, str);
+  serverless.cli.log('Wrote .env file to ' + filePath);
+}
