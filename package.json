@@ -1,0 +1,19 @@
+{
+  "name": "serverless-run-function-plugin",
+  "version": "1.0.0",
+  "description": "Run serverless 1.0 function locally",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuyu/serverless-run-function-plugin.git"
+  },
+  "author": "Maksym Stefanchuk <objectivem@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fuyu/serverless-run-function-plugin/issues"
+  },
+  "homepage": "https://github.com/fuyu/serverless-run-function-plugin#readme"
+}
